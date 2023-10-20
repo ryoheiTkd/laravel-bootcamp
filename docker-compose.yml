@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  app:
+    build: ./infra/php
+    volumes: #ホストの./srcディレクトリとコンテナの/var/www/chirperをバインドマウント
+      - ./src:/var/www/chirper
+    tty: true # 起動した直後に落ちるのの対策
+  web:
+    build: ./infra/nginx
+    ports:
+      - 8080:80
+    volumes:
+      - ./src:/var/www/chirper
+      - ./infra/nginx/chirper.conf:/etc/nginx/conf.d/chirper.conf
+  db:
+    build: ./infra/mysql
+    volumes:
+      - db-store:/var/lib/mysql
+
+volumes:
+  db-store:
