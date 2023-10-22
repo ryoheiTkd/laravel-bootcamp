@@ -50,6 +50,10 @@ EXPOSE 9000
 # 実行中のプロセスIDを保存する場所を作成する
 RUN sudo mkdir -p /run/php/
 
+# nvmをインストール
+SHELL ["/bin/bash", "-c"]
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+
 # php-fpm8.2を起動
 CMD ["sudo", "php-fpm8.2"]
 
@@ -60,5 +64,11 @@ WORKDIR /var/www/chirper
 # sudo mkdir /usr/local/share/composer/cache
 # sudo chown -R chirper /usr/local/share/composer
 # rm -rf *
+# rm -rf ./.*
 # composer create-project --prefer-dist "laravel/laravel=10.*" .
 # chmod -R 777 storage bootstrap/cache
+
+# nodeのインストールもコンテナ内で実施
+# nvm install v18.18.2
+
+# .envの編集などをその後実施してください。
