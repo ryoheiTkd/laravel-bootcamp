@@ -67,6 +67,8 @@ WORKDIR /var/www/chirper
 # rm -rf ./.*
 # composer create-project --prefer-dist "laravel/laravel=10.*" .
 # chmod -R 777 storage bootstrap/cache
+# chmod -R guo+w storage
+# php artisan storage:link
 
 # nodeのインストールもコンテナ内で実施
 # nvm install v18.18.2
