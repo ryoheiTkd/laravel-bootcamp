@@ -69,6 +69,7 @@ WORKDIR /var/www/chirper
 # composer create-project --prefer-dist "laravel/laravel=10.*" .
 # composer require laravel-lang/lang
 # php artisan lang:update
+# mailpit
 # chmod -R 777 storage bootstrap/cache
 
 # nodeのインストールもコンテナ内で実施
