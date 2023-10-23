@@ -4,6 +4,7 @@ services:
     build: ./infra/php
     ports:
       - 5173:5173 # VITE
+      - 8025:8025 # Mailpit
     volumes: #ホストの./srcディレクトリとコンテナの/var/www/chirperをバインドマウント
       - ./src:/var/www/chirper
     tty: true # 起動した直後に落ちるのの対策

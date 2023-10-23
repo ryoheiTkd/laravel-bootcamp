@@ -28,7 +28,7 @@ RUN sudo apt -y install --no-install-recommends curl git unzip libzip-dev libicu
 # 最新版PHP-FPM(8.2)を入れるためにリポジトリを登録し、非対話的インストール
 RUN sudo add-apt-repository ppa:ondrej/php \
   && sudo apt update \
-  && sudo DEBIAN_FRONTEND=noninteractive TZ=Asia/Tokyo apt -y install php8.2-fpm php8.2-xml php8.2-curl php8.2-intl php8.2-mysql php8.2-zip php8.2-bcmath php8.2-imagick
+  && sudo DEBIAN_FRONTEND=noninteractive TZ=Asia/Tokyo apt -y install php8.2-fpm php8.2-xml php8.2-curl php8.2-intl php8.2-mysql php8.2-zip php8.2-bcmath php8.2-imagick php8.2-mbstring
 
 # composerを入れておく。COPYコマンドは--fromで別のイメージをビルドして結果だけとってこれる
 # composerのインストールはファイルを引っ張ってきて…という手順があるので開発機ではこれが楽(CPUアーキテクチャが同じであることを確認)
@@ -50,9 +50,10 @@ EXPOSE 9000
 # 実行中のプロセスIDを保存する場所を作成する
 RUN sudo mkdir -p /run/php/
 
-# nvmをインストール
+# nvmとmailpitをインストール
 SHELL ["/bin/bash", "-c"]
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash \
+  && sudo bash < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)
 
 # php-fpm8.2を起動
 CMD ["sudo", "php-fpm8.2"]
@@ -66,9 +67,11 @@ WORKDIR /var/www/chirper
 # rm -rf *
 # rm -rf ./.*
 # composer create-project --prefer-dist "laravel/laravel=10.*" .
+# composer require laravel-lang/lang
+# php artisan lang:update
 # chmod -R 777 storage bootstrap/cache
 
 # nodeのインストールもコンテナ内で実施
 # nvm install v18.18.2
 
-# .envの編集などをその後実施してください。
+# .envやconfig/app.phpの編集などをその後実施してください。
