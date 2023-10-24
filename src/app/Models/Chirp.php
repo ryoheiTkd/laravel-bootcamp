@@ -19,8 +19,8 @@ class Chirp extends Model
         'created' => ChirpCreated::class,
     ];
 
-    public function user(): BelongsTo
+    public function admin(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Admin::class);
     }
 }
